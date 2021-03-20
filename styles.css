@@ -1,0 +1,28 @@
+.title {
+  text-align: center;
+}
+
+.form {
+  text-align: center;
+}
+
+.form-Content {
+  background-color: red;
+  padding-bottom: 1rem;
+}
+
+.submit-Button {
+  font-size: 1.3rem;
+}
+
+.tableFormat table {
+  background-color: yellow;
+  margin: 10px auto;
+}
+
+td,
+th {
+  padding: 5px;
+  border: solid red 1px;
+  text-align: center;
+}
