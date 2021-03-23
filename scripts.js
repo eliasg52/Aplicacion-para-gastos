@@ -17,6 +17,14 @@ document.addEventListener('DOMContentLoaded', (e) => {
   });
 });
 
+//funcion encargada de generar un ID para cada elemento
+const getNewTransacionId = () => {
+  let lastTransactionId = localStorage.getItem('lastTransactionId') || '-1';
+  let newTransactionId = JSON.parse(lastTransactionId) + 1;
+  localStorage.setItem('lastTransactionId', JSON.stringify(newTransactionId));
+  return newTransactionId;
+};
+
 const convertFormDataToTransactionObj = (transactionFormData) => {
   let transactionType = transactionFormData.get('transactionType');
   let transactionDescription = transactionFormData.get(
@@ -24,12 +32,14 @@ const convertFormDataToTransactionObj = (transactionFormData) => {
   );
   let transactionAmount = transactionFormData.get('transactionAmount');
   let transactionCategory = transactionFormData.get('transactionCategory');
+  let transactionId = getNewTransacionId();
 
   return {
     transactionType: transactionType,
     transactionDescription: transactionDescription,
     transactionAmount: transactionAmount,
     transactionCategory: transactionCategory,
+    transactionId: transactionId,
   };
 };
 
@@ -48,6 +58,16 @@ const insertRowInTable = (transactionObj) => {
 
   newTransactionCell = newTransactionRowRef.insertCell(3);
   newTransactionCell.textContent = transactionObj['transactionCategory'];
+
+  let newDeleteCell = newTransactionRowRef.insertCell(4);
+  let deleteButton = document.createElement('BUTTON');
+  deleteButton.textContent = 'Eliminar';
+  newDeleteCell.append(deleteButton);
+
+  deleteButton.addEventListener('click', (e) => {
+    console.dir(e.target.parentNode.parentNode);
+    e.target.parentNode.parentNode.remove();
+  });
 };
 
 const saveTransactionObj = (transactionObj) => {
