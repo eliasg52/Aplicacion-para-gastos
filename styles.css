@@ -1,28 +1,16 @@
 .title {
   text-align: center;
+  margin: 1rem 0 1.68rem 0;
 }
 
 .form {
   text-align: center;
 }
 
-.form-Content {
-  background-color: red;
-  padding-bottom: 1rem;
+.form-category {
+  margin-bottom: 0.7rem;
 }
 
-.submit-Button {
-  font-size: 1.3rem;
-}
-
-.tableFormat table {
-  background-color: yellow;
-  margin: 10px auto;
-}
-
-td,
-th {
-  padding: 5px;
-  border: solid red 1px;
-  text-align: center;
+body {
+  background-color: #ffffff;
 }

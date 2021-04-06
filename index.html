@@ -4,63 +4,114 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+    />
     <link rel="stylesheet" href="styles.css" />
     <title>Aplicacion para gastos</title>
   </head>
   <body>
-    <h1 class="title">Mi Aplicacion para Gastos</h1>
-    <form id="form-body" class="form" action="">
-      <div class="form-Content">
-        Tipo Transaccion
-        <label for="ingreso">Ingreso</label>
-        <input
-          type="radio"
-          id="ingreso"
-          name="transactionType"
-          value="ingreso"
-        />
-        <label for="egreso">Egreso</label>
-        <input type="radio" id="egreso" name="transactionType" value="egreso" />
+    <h1 class="title">Mis Gastos</h1>
+    <div class="row">
+      <div class="col s5 offset-s1">
+        <table class="striped responsive-table" id="transactionTable">
+          <tr>
+            <th>Tipo</th>
+            <th>Descripcion</th>
+            <th>Monto</th>
+            <th>Categoria</th>
+            <th>Eliminar</th>
+          </tr>
+        </table>
       </div>
 
-      <div class="form-Content">
-        <label for="transactionDescription">Descripcion</label>
-        <input
-          type="text"
-          id="transactionDescription"
-          name="transactionDescription"
-        />
-      </div>
+      <div class="col s5">
+        <div class="col s8 offset-s2">
+          <form id="form-body" class="form" action="">
+            <div>
+              Tipo Transaccion
+              <p>
+                <label>
+                  <input
+                    value="Ingreso"
+                    id="ingreso"
+                    class="with-gap"
+                    name="transactionType"
+                    type="radio"
+                    checked
+                  />
+                  <span>Ingreso</span>
+                </label>
 
-      <div class="form-Content">
-        <label for="transactionAmount">Monto</label>
-        <input type="number" id="transactionAmount" name="transactionAmount" />
-      </div>
+                <label>
+                  <input
+                    value="Egreso"
+                    id="egreso"
+                    class="with-gap"
+                    name="transactionType"
+                    type="radio"
+                    checked
+                  />
+                  <span>Egreso</span>
+                </label>
+              </p>
+            </div>
 
-      <div class="form-Content">
-        <label for="transactionCategory">Categoria</label>
-        <input
-          type="text"
-          id="transactionCategory"
-          name="transactionCategory"
-        />
-      </div>
+            <div class="input-field">
+              <label for="transactionDescription">Descripcion</label>
+              <input
+                class="validate"
+                required
+                type="text"
+                id="transactionDescription"
+                name="transactionDescription"
+              />
+            </div>
 
-      <div class="form-Content">
-        <button id="submit-Button" class="submit-Button">Añadir</button>
+            <div class="input-field">
+              <label for="transactionAmount">Monto</label>
+              <input
+                class="validate"
+                min="0"
+                required
+                type="number"
+                id="transactionAmount"
+                name="transactionAmount"
+              />
+            </div>
+
+            <div class="form-category">
+              <label for="transactionCategory">Categoria</label>
+              <select
+                class="browser-default"
+                required
+                type="text"
+                id="transactionCategory"
+                name="transactionCategory"
+              ></select>
+            </div>
+
+            <div>
+              <button
+                id="submit-Button"
+                class="btn waves-effect waves-light"
+                type="submit"
+                name="action"
+              >
+                Añadir
+                <i class="material-icons right">send</i>
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
-    </form>
-    <div class="tableFormat">
-      <table id="transactionTable">
-        <tr>
-          <th>Tipo</th>
-          <th>Descripcion</th>
-          <th>Monto</th>
-          <th>Categoria</th>
-          <th>Eliminar</th>
-        </tr>
-      </table>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="scripts.js"></script>
   </body>
 </html>

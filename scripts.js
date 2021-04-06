@@ -8,9 +8,24 @@ form.addEventListener('submit', (e) => {
   let transactionObj = convertFormDataToTransactionObj(transactionFormData);
   saveTransactionObj(transactionObj);
   insertRowInTable(transactionObj);
+  form.reset();
 });
 
-document.addEventListener('DOMContentLoaded', (e) => {
+const drawCategories = () => {
+  let categories = ['Alquiler', 'Comida', 'Diversion'];
+  for (category of categories) {
+    instertCategory(category);
+  }
+};
+
+const instertCategory = (categoryName) => {
+  const selectElement = document.getElementById('transactionCategory');
+  let htmlToInsert = `<option> ${categoryName} </option>`;
+  selectElement.insertAdjacentHTML('beforeend', htmlToInsert);
+};
+
+document.addEventListener('DOMContentLoaded', function (event) {
+  drawCategories();
   let transactionObjArray = JSON.parse(localStorage.getItem('transactionData'));
   transactionObjArray.forEach((element) => {
     insertRowInTable(element);
@@ -45,7 +60,12 @@ const convertFormDataToTransactionObj = (transactionFormData) => {
 
 const insertRowInTable = (transactionObj) => {
   let transactionTableRef = document.getElementById('transactionTable');
+
   let newTransactionRowRef = transactionTableRef.insertRow(-1);
+  newTransactionRowRef.setAttribute(
+    'data-transaction-id',
+    transactionObj['transactionId']
+  );
 
   let newTransactionCell = newTransactionRowRef.insertCell(0);
   newTransactionCell.textContent = transactionObj['transactionType'];
@@ -61,13 +81,32 @@ const insertRowInTable = (transactionObj) => {
 
   let newDeleteCell = newTransactionRowRef.insertCell(4);
   let deleteButton = document.createElement('BUTTON');
+  deleteButton.classList.add('waves-effect', 'waves-light', 'btn-small');
   deleteButton.textContent = 'Eliminar';
   newDeleteCell.append(deleteButton);
 
   deleteButton.addEventListener('click', (e) => {
-    console.dir(e.target.parentNode.parentNode);
-    e.target.parentNode.parentNode.remove();
+    let transactionRow = e.target.parentNode.parentNode;
+    let transactionId = transactionRow.getAttribute('data-transaction-id');
+    transactionRow.remove();
+    deleteTransactionObj(transactionId);
   });
+};
+
+//Le paso como parametro el transactionId que quiero eliminar
+const deleteTransactionObj = (transactionId) => {
+  //Obtengo las transacciones de mi base de datos y desconvierto de JSON a objeto
+  let transactionObjArray = JSON.parse(localStorage.getItem('transactionData'));
+  //Busco el indice / la posicion de la transaccion que quiero eliminar
+  let transactionIndexInArray = transactionObjArray.findIndex(
+    (elemento) => elemento.transactionId == transactionId
+  );
+  //Elimino el elemento de esa posicion
+  transactionObjArray.splice(transactionIndexInArray, 1);
+  //Convierto de objeto a JSON para poder guaradrlo en el LocalStorage
+  let transactionArrayJSON = JSON.stringify(transactionObjArray);
+  //Guardo mi array de transacciones JSON en el local storage
+  localStorage.setItem('transactionData', transactionArrayJSON);
 };
 
 const saveTransactionObj = (transactionObj) => {
